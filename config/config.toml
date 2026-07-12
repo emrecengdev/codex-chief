@@ -1,0 +1,21 @@
+# codex-chief — keys to MERGE into ~/.codex/config.toml
+#
+# RULES:
+# - Merge, never overwrite. Preserve everything already in your config
+#   (profiles, providers, notify, sandbox, plugins, marketplace...).
+# - TOML: root keys MUST appear before any [table] header. A key written
+#   after [agents] silently becomes agents.<key> and will not work.
+# - Do not add keys beyond these five. model_verbosity, model_reasoning_summary
+#   and tool_output_token_limit are already model-catalog defaults for GPT-5.6
+#   (verified on Codex CLI 0.144.0) — restating defaults just adds noise.
+
+# --- root keys (before any [table]) ---
+model = "gpt-5.6-terra"                  # cheap daily orchestrator; escalate via profiles/picker
+model_reasoning_effort = "medium"
+model_auto_compact_token_limit = 200000  # starting value — tune to your session length
+
+[agents]
+max_threads = 4    # default is 6; 4 is a safer quota ceiling
+max_depth = 1      # CRITICAL: keep at 1 — recursive fan-out is a quota explosion
+# Routing policy does NOT go here (no such field in the official schema).
+# It lives in ~/.codex/AGENTS.md — see this repo's AGENTS.md.

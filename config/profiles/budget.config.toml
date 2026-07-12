@@ -1,0 +1,9 @@
+# ~/.codex/budget.config.toml  →  codex --profile budget
+# True budget mode: quota running low, or short sessions with small tasks.
+# With delegation active, High is enough for the main seat — implementation
+# still runs on worker (Luna XHigh). If you use this profile WITHOUT
+# delegation (main agent writes the code itself), set xhigh instead:
+# Luna High completes 44% of DeepSWE tasks vs XHigh's 57%, and the retry
+# loop of the weaker setting costs more than XHigh's ~2x token volume.
+model = "gpt-5.6-luna"
+model_reasoning_effort = "high"

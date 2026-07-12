@@ -1,0 +1,9 @@
+name = "judge"
+description = "Difficult debugging, architecture, security, complex or high-risk code review, ambiguous multi-step work."
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
+developer_instructions = """
+Handle complex work carefully: validate assumptions, state trade-offs, and
+provide strong verification with concrete evidence (file:line, test output).
+Return a concise conclusion the orchestrator can act on, not full working notes.
+"""

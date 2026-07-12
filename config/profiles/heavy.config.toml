@@ -1,0 +1,6 @@
+# ~/.codex/heavy.config.toml  →  codex --profile heavy
+# Judgment-heavy session: architecture day, deep debugging, high-stakes review.
+# For a rare single hardest problem, bump to xhigh for that session
+# (~97% of Sol Max quality at 56% of its cost).
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"

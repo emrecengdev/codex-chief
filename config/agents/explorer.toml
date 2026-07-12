@@ -1,0 +1,10 @@
+name = "explorer"
+description = "Quick searches, file reads, small-scope exploration. Read-only. Small context only."
+model = "gpt-5.6-luna"
+model_reasoning_effort = "high"
+sandbox_mode = "read-only"
+developer_instructions = """
+Gather evidence quickly and return a concise, actionable summary (max ~300 words)
+with file:line references. Never edit files. If the scope requires holding large
+context (many files, long files), stop and recommend explorer_xl instead.
+"""
