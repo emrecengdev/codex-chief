@@ -17,10 +17,12 @@ Follow these steps exactly, in order. Show the user every diff before
 saving. Never overwrite an existing file wholesale — merge.
 
 STEP 0 — Backup.
-Create a timestamped backup directory (e.g. ~/.codex-backup-<date>/) and
-copy the current config.toml, AGENTS.md, and the agents/ directory into it
-(those that exist). Tell the user the backup path. Do not proceed without a
-successful backup.
+Create a timestamped backup directory next to the codex home (e.g.
+~/.codex-backup-<date>/ — on Windows: %USERPROFILE%\.codex-backup-<date>\)
+and copy the current config.toml, AGENTS.md, and the agents/ directory into
+it (those that exist). This backup directory is the one permitted exception
+to the "no writes outside codex-home" constraint below. Tell the user the
+backup path. Do not proceed without a successful backup.
 
 STEP 1 — Merge config keys.
 Read the target config.toml. Merge in ONLY these keys from ./config/config.toml:
@@ -32,8 +34,14 @@ Read the target config.toml. Merge in ONLY these keys from ./config/config.toml:
 Rules:
   - The three root keys MUST be placed before any [table] header in the
     file. In TOML, a root key written after a [table] header silently
-    becomes a member of that table and will not work.
-  - If a key already exists, update its value in place; do not duplicate it.
+    becomes a member of that table and will not work. Prefer grouping
+    model_auto_compact_token_limit next to the other model_* root keys.
+  - "Already exists" means AT ROOT SCOPE — in the region before the first
+    [table] header. Keys named model or model_reasoning_effort may also
+    appear inside profile tables like [profiles.plan]; those are separate,
+    profile-scoped settings — do NOT modify, move, or count them as
+    duplicates. Only update the root-scope occurrence, or add the key to
+    the root region if absent there.
   - Preserve every other existing key, table, comment, profile, provider,
     and plugin setting exactly as it is.
   - Do NOT add model_verbosity, model_reasoning_summary, or
@@ -52,11 +60,15 @@ Same conflict rule as step 2.
 
 STEP 4 — Append AGENTS.md sections.
 Read the target <codex-home>/AGENTS.md (create it if missing). APPEND the
-sections from ./AGENTS.md of this repo (Mindset, Routing, Autonomy and
-approval, Engineering standards, Output) to the END of the existing file,
-skipping the comment header lines that start with '#'. Do not delete or
-modify any existing content in the target file. If a section with the same
-heading already exists, show the user both and ask which to keep.
+five sections from ./AGENTS.md of this repo (## Mindset, ## Routing,
+## Autonomy and approval, ## Engineering standards, ## Output) to the END
+of the existing file. Skip ONLY the leading comment block — the few lines
+at the very top of the repo file that begin with a single '#' followed by
+a space; the '##' markdown section headings are content and MUST be kept.
+Do not delete or modify any existing content in the target file. Conflict
+check is by exact heading text: only if the target file already contains a
+heading exactly matching one of the five above, show the user both
+sections and ask which to keep.
 
 STEP 5 — Verify.
   a. Re-read the final config.toml and confirm: the three root keys appear
