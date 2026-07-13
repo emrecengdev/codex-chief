@@ -99,6 +99,28 @@ Everything else stays in the main thread.
 - The routing policy has no config field — `[agents]` only carries
   thread/depth/runtime settings. Routing lives in AGENTS.md.
 
+## Field notes (July 12–13, 2026 quota incident)
+
+A community-reported quota burn spike, and the Codex lead's official
+response, confirmed three of this repo's choices and added two new rules:
+
+- **Context beyond ~272K tokens bills at 2×.** The limit was briefly raised
+  to 372K, which silently exposed long threads to double billing; it was
+  reverted and will return. This repo's `model_auto_compact_token_limit =
+  200000` keeps the main thread below the 2× zone either way.
+- **The current ("v2") subagent layer copies the parent's FULL context**
+  into each spawned agent (the old v1 spawned with fresh history). Practical
+  rule: **delegate early, while the thread is lean** — spawning three agents
+  at the end of a fat session multiplies the fat. Prefer a fresh session per
+  large task over one mega-thread.
+- Ultra was confirmed to spawn nested subagents at Ultra effort — the ban
+  stands. OpenAI states multi-agent overuse at high/xhigh is being fixed.
+- Reasoning-effort budgets ("juice" values) were changed in a live
+  experiment and rolled back after community pushback. Treat effort labels
+  as **relative, tunable dials**, not absolute guarantees: after any OpenAI
+  announcement about efficiency or effort, re-test a representative task and
+  shift the ladder one step up if quality dropped.
+
 ## Known uncertainties
 
 - The Sol xhigh≈max claim rests on one leaderboard (DeepSWE).
