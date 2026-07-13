@@ -149,6 +149,13 @@ New session → *"Where is function X defined and who calls it?"* should route t
 | Quota running low / small tasks | `codex --profile budget` (Luna High) |
 | Rare hardest single problem | picker → Sol XHigh for that session |
 
+## Optional: full autonomy & Windows fixes
+
+Two opt-ins that are **not** part of the default install:
+
+- **No approval prompts:** `approval_policy = "never"` + `sandbox_mode = "danger-full-access"` (commented in [`config/config.toml`](config/config.toml)). Understand the trade first: the only remaining guardrail is the behavioral policy in AGENTS.md — there is no technical barrier left. Approval prompts from subagent threads disappear, which is exactly why people want it.
+- **Windows: recurring sandbox/elevation prompts?** The recommended `elevated` native sandbox sometimes fails to install (`codex-windows-sandbox-setup.exe not found` in the logs) and re-prompts every session. Official fallback: `[windows] sandbox = "unelevated"`.
+
 ## Extra cost levers
 
 - **Trim MCP tool surfaces.** Allowlisting a 93-tool MCP server down to 3 tools cut per-turn schema overhead from ~55K to ~3K tokens. The single biggest lever most people miss.

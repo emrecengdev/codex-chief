@@ -14,8 +14,22 @@ model = "gpt-5.6-terra"                  # cheap daily orchestrator; escalate vi
 model_reasoning_effort = "medium"
 model_auto_compact_token_limit = 200000  # starting value — tune to your session length
 
+# --- OPTIONAL: full autonomy (OFF by default — read the warning) ---
+# Uncomment to stop all approval prompts and run unsandboxed. Only do this if
+# you accept that the ONLY guardrail left is the behavioral policy in
+# AGENTS.md ("require confirmation for external/destructive actions") — there
+# is no technical barrier if the agent misreads an instruction.
+# approval_policy = "never"
+# sandbox_mode = "danger-full-access"
+
 [agents]
 max_threads = 4    # default is 6; 4 is a safer quota ceiling
 max_depth = 1      # CRITICAL: keep at 1 — recursive fan-out is a quota explosion
 # Routing policy does NOT go here (no such field in the official schema).
 # It lives in ~/.codex/AGENTS.md — see this repo's AGENTS.md.
+
+# --- Windows only: if you see recurring sandbox-setup / elevation prompts ---
+# The recommended "elevated" native sandbox sometimes fails to install
+# (codex-windows-sandbox-setup.exe not found). The official fallback:
+# [windows]
+# sandbox = "unelevated"
